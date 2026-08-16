@@ -1,0 +1,3 @@
+[install]
+# Standalone package — no workspaces.
+workspace = false
