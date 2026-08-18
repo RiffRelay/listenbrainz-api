@@ -78,3 +78,12 @@ export type {
   ValidateTokenResponse,
 } from "./types.js";
 export { LISTENBRAINZ_API_BASE, MUSICBRAINZ_API_BASE } from "./types.js";
+export {
+  coverArtUrl,
+  lbHomeUrl,
+  lbSettingsUrl,
+  lbUserUrl,
+  mbArtistUrl,
+  mbRecordingUrl,
+  mbReleaseUrl,
+} from "./urls.js";

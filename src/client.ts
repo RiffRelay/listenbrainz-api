@@ -74,16 +74,6 @@ export interface SubmitPayload {
   trackMetadata: TrackMetadata;
 }
 
-/**
- * Fully-typed ListenBrainz REST API client. Zero dependencies — built on
- * the platform `fetch`, so it runs on Bun and Node 18+ alike.
- *
- * ```ts
- * const lb = new ListenBrainzClient({ token: "..." });
- * const np = await lb.getPlayingNow("myuser");
- * const ok = await lb.submitNowPlaying("myuser", createNowPlaying({ artistName: "...", trackName: "..." }));
- * ```
- */
 export class ListenBrainzClient {
   private readonly http: HttpClient;
   private readonly baseUrl: string;
