@@ -466,7 +466,7 @@ export class ListenBrainzClient {
   /** Releases released within the last `days` days. */
   async getFreshReleases(days = 30): Promise<FreshReleasesResponse> {
     return this.http.request<FreshReleasesResponse>({
-      path: "/1/fresh-releases/",
+      path: "/1/explore/fresh-releases/",
       query: { days },
     });
   }
