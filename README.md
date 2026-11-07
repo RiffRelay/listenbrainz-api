@@ -3,34 +3,35 @@
 A typed, zero-dependency ListenBrainz REST client for Node 18+, Bun, Deno and
 other runtimes with `fetch`. Includes a rate-limited MusicBrainz client.
 
-[Read the full documentation](https://listenbrainzbot.github.io/listenbrainz-api/docs).
+[Read the full documentation](https://riffrelay.github.io/listenbrainz-api/).
 
 ```sh
 npm install listenbrainz-api
 ```
 
-The GitHub Actions workflow validates pushes and pull requests. It publishes a
-scoped copy to GitHub Packages as `@listenbrainzbot/listenbrainz-api` when a
-GitHub Release is published; the npmjs.org package keeps its existing unscoped
-name. Publish a GitHub Release whose tag matches the package version (for
-example, `v0.3.0`), or run the workflow manually from that tag:
+The GitHub Actions workflow validates pull requests and publishes a scoped copy
+to GitHub Packages as `@riffrelay/listenbrainz-api` on pushes to `main` and
+published releases. It only publishes versions not already in the registry;
+bump the package version to publish new contents. The npmjs.org package keeps
+its existing unscoped name. A release tag must match the package version (for
+example, `v0.3.0`), and the workflow can also be run manually:
 
 ```sh
-gh workflow run publish-github-package.yml --repo ListenBrainzBot/listenbrainz-api --ref v0.3.0
+gh workflow run publish-github-package.yml --repo RiffRelay/listenbrainz-api --ref main
 ```
 
 To install the GitHub Packages copy, configure the registry and authenticate
 with a GitHub personal access token (classic) with `read:packages`:
 
 ```sh
-npm login --scope=@listenbrainzbot --auth-type=legacy --registry=https://npm.pkg.github.com
-npm install @listenbrainzbot/listenbrainz-api
+npm login --scope=@riffrelay --auth-type=legacy --registry=https://npm.pkg.github.com
+npm install @riffrelay/listenbrainz-api
 ```
 
 Never commit the token or an `.npmrc` containing it. The first published GitHub
 Package is private by default; change its visibility to public from the package
 settings if you want anyone to install it. When using the scoped copy, import
-from `@listenbrainzbot/listenbrainz-api`; the npmjs.org package keeps the
+from `@riffrelay/listenbrainz-api`; the npmjs.org package keeps the
 `listenbrainz-api` import path.
 
 ```ts

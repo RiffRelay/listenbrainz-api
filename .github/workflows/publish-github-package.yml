@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 22
           registry-url: https://npm.pkg.github.com
-          scope: "@listenbrainzbot"
+          scope: "@riffrelay"
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -46,7 +46,7 @@ jobs:
 
   publish:
     name: Publish scoped package
-    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/v'))
+    if: github.event_name != 'pull_request'
     needs: validate
     runs-on: ubuntu-latest
     permissions:
@@ -66,12 +66,13 @@ jobs:
         with:
           node-version: 22
           registry-url: https://npm.pkg.github.com
-          scope: "@listenbrainzbot"
+          scope: "@riffrelay"
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
       - name: Verify release tag matches package version
+        if: startsWith(github.ref, 'refs/tags/v')
         run: |
           node --input-type=module -e '
             import { readFileSync } from "node:fs";
@@ -82,9 +83,16 @@ jobs:
           '
 
       - name: Apply GitHub Packages scope
-        run: npm pkg set name=@listenbrainzbot/listenbrainz-api
+        run: npm pkg set name=@riffrelay/listenbrainz-api
 
       - name: Publish package
-        run: npm publish --registry=https://npm.pkg.github.com
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          package="@riffrelay/listenbrainz-api"
+          if npm view "${package}@${version}" version --registry=https://npm.pkg.github.com >/dev/null 2>&1; then
+            echo "${package}@${version} already exists; bump package.json to publish a new version."
+          else
+            npm publish --registry=https://npm.pkg.github.com
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

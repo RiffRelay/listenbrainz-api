@@ -6,7 +6,7 @@
 import { ListenBrainzClient } from "listenbrainz-api";
 
 const lb = new ListenBrainzClient({
-  userAgent: "BrainzBot/1.0 (https://github.com/ListenBrainzBot/ListenBrainzBot)",
+  userAgent: "RiffRelay/1.0 (https://github.com/RiffRelay/RiffRelayBot)",
   token: process.env.LISTENBRAINZ_TOKEN,
 });
 ```

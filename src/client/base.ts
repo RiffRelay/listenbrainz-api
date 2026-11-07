@@ -10,7 +10,7 @@ export class ClientBase {
     this.baseUrl = (opts.baseUrl ?? LISTENBRAINZ_API_BASE).replace(/\/$/, "");
     this.http = new HttpClient(
       this.baseUrl,
-      opts.userAgent ?? "listenbrainz-api/0.2.1 (https://github.com/ListenBrainzBot/listenbrainz-api)",
+      opts.userAgent ?? "listenbrainz-api/0.2.1 (https://github.com/RiffRelay/listenbrainz-api)",
       opts.token,
     );
   }

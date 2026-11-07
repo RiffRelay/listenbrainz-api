@@ -1,7 +1,7 @@
 site_name: listenbrainz-api
 site_description: Practical TypeScript client and API reference for ListenBrainz
-site_url: https://listenbrainzbot.github.io/listenbrainz-api/
-repo_url: https://github.com/ListenBrainzBot/listenbrainz-api
+site_url: https://riffrelay.github.io/listenbrainz-api/
+repo_url: https://github.com/RiffRelay/listenbrainz-api
 docs_dir: docs
 site_dir: site
 strict: true

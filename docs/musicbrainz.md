@@ -8,7 +8,7 @@ fetch a selected entity by MBID.
 import { MusicBrainzClient } from "listenbrainz-api";
 
 const mb = new MusicBrainzClient({
-  userAgent: "BrainzBot/1.0 (https://github.com/ListenBrainzBot/ListenBrainzBot)",
+  userAgent: "RiffRelay/1.0 (https://github.com/RiffRelay/RiffRelayBot)",
 });
 const recordings = await mb.searchRecording("Paranoid Android", 5);
 const recording = recordings[0]
