@@ -1,6 +1,7 @@
 export type {
   ListenBrainzClientOptions,
   ListensQueryOptions,
+  MetadataLookupOptions,
   StatsQueryOptions,
   SubmitPayload,
   TrackMetadataInput,
@@ -18,6 +19,7 @@ export { MusicBrainzClient } from "./musicbrainz.js";
 import type { StatsRange } from "./types.js";
 export type StatsQueryRange = StatsRange;
 
+export type { HttpRequestOptions } from "./http.js";
 export type {
   AlbumMetadata,
   AlbumStat,

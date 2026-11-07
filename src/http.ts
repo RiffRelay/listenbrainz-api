@@ -1,4 +1,7 @@
 import { ListenBrainzError, ListenBrainzTimeoutError } from "./errors.js";
+import { createRequestHeaders, createRequestUrl } from "./http/request.js";
+import { decodeResponse } from "./http/response.js";
+import { delayForRetry } from "./http/retry.js";
 
 export interface HttpRequestOptions {
   method?: "GET" | "POST" | "PUT" | "DELETE";
@@ -16,16 +19,6 @@ export interface HttpRequestOptions {
   retries?: number;
   /** Per-attempt timeout in ms (default 15000). */
   timeoutMs?: number;
-}
-
-const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
-
-function delayForRetry(status: number, retryAfter: string | null, attempt: number): number {
-  if (status === 429 && retryAfter) {
-    const seconds = Number.parseInt(retryAfter, 10);
-    if (Number.isFinite(seconds)) return seconds * 1000;
-  }
-  return 250 * 2 ** attempt;
 }
 
 export class HttpClient {
@@ -47,23 +40,12 @@ export class HttpClient {
       timeoutMs = 15_000,
     } = opts;
 
-    const url = new URL(`${this.baseUrl}${path}`);
-    if (query) {
-      for (const [key, value] of Object.entries(query)) {
-        if (value !== undefined && value !== null) {
-          url.searchParams.set(key, String(value));
-        }
-      }
-    }
-
-    const requestHeaders: Record<string, string> = {
-      "User-Agent": this.userAgent,
-      Accept: "application/json",
-      ...headers,
-    };
-    const authToken = token ?? this.defaultToken;
-    if (authToken) requestHeaders.Authorization = `Token ${authToken}`;
-    if (body !== undefined) requestHeaders["Content-Type"] = "application/json";
+    const url = createRequestUrl(this.baseUrl, path, query);
+    const requestHeaders = createRequestHeaders(this.userAgent, this.defaultToken, {
+      token,
+      headers,
+      hasBody: body !== undefined,
+    });
 
     let attempt = 0;
     while (true) {
@@ -99,37 +81,14 @@ export class HttpClient {
 
       const shouldRetry = response.status === 429 || response.status >= 500;
       if (shouldRetry && attempt < retries) {
-        await sleep(delayForRetry(response.status, response.headers.get("retry-after"), attempt));
+        await new Promise<void>((resolve) =>
+          setTimeout(resolve, delayForRetry(response.status, response.headers.get("retry-after"), attempt)),
+        );
         attempt += 1;
         continue;
       }
 
-      const raw = await response.text();
-      let json: unknown = null;
-      if (raw.length > 0) {
-        try {
-          json = JSON.parse(raw);
-        } catch {
-          // Non-JSON body (HTML error page etc.)
-          json = null;
-        }
-      }
-
-      if (!response.ok) {
-        const apiMessage =
-          json && typeof json === "object" && "message" in json && typeof json.message === "string"
-            ? json.message
-            : response.statusText;
-        throw new ListenBrainzError({
-          status: response.status,
-          message: apiMessage || `HTTP ${response.status}`,
-          path,
-          method,
-          body: json,
-        });
-      }
-
-      return json as T;
+      return decodeResponse<T>(response, path, method);
     }
   }
 }
