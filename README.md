@@ -9,6 +9,22 @@ other runtimes with `fetch`. Includes a rate-limited MusicBrainz client.
 npm install listenbrainz-api
 ```
 
+The GitHub release workflow also publishes a scoped copy to GitHub Packages as
+`@listenbrainzbot/listenbrainz-api`; the npmjs.org package keeps its existing
+unscoped name. To install the GitHub Packages copy, configure the registry and
+authenticate with a GitHub personal access token (classic) with `read:packages`:
+
+```sh
+npm login --scope=@listenbrainzbot --auth-type=legacy --registry=https://npm.pkg.github.com
+npm install @listenbrainzbot/listenbrainz-api
+```
+
+Never commit the token or an `.npmrc` containing it. The first published GitHub
+Package is private by default; change its visibility to public from the package
+settings if you want anyone to install it. When using the scoped copy, import
+from `@listenbrainzbot/listenbrainz-api`; the npmjs.org package keeps the
+`listenbrainz-api` import path.
+
 ```ts
 import { ListenBrainzClient, createListen } from "listenbrainz-api";
 
