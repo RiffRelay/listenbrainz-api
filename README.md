@@ -3,7 +3,7 @@
 A typed, zero-dependency ListenBrainz REST client for Node 18+, Bun, Deno and
 other runtimes with `fetch`. Includes a rate-limited MusicBrainz client.
 
-[Read the full documentation](https://listenbrainzbot.github.io/listenbrainz-api/).
+[Read the full documentation](https://listenbrainzbot.github.io/listenbrainz-api/docs).
 
 ```sh
 npm install listenbrainz-api
