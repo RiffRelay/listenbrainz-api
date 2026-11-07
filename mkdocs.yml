@@ -1,0 +1,28 @@
+site_name: listenbrainz-api
+site_description: Practical TypeScript client and API reference for ListenBrainz
+site_url: https://listenbrainzbot.github.io/listenbrainz-api/
+repo_url: https://github.com/ListenBrainzBot/listenbrainz-api
+docs_dir: docs
+site_dir: site
+strict: true
+
+nav:
+  - Home: index.md
+  - Account: account.md
+  - Listens: listens.md
+  - Statistics: stats.md
+  - Submissions and feedback: writes.md
+  - Metadata and discovery: discovery.md
+  - MusicBrainz: musicbrainz.md
+  - Client behavior: usage.md
+  - API route index:
+      - Overview: api/index.md
+      - Core and radio: api/core.md
+      - Statistics: api/statistics.md
+      - Playlists: api/playlists.md
+      - Recordings, feedback, and pins: api/recordings.md
+      - Popularity and metadata: api/catalog.md
+      - Social: api/social.md
+      - Recommendations: api/recommendations.md
+      - Miscellaneous and exports: api/misc.md
+      - Art: api/art.md

@@ -16,6 +16,7 @@
   "files": [
     "dist",
     "README.md",
+    "docs",
     "LICENSE"
   ],
   "keywords": [
@@ -58,7 +59,7 @@
     "type": "git",
     "url": "git+https://github.com/ListenBrainzBot/listenbrainz-api.git"
   },
-  "homepage": "https://github.com/ListenBrainzBot/listenbrainz-api#readme",
+  "homepage": "https://listenbrainzbot.github.io/listenbrainz-api/",
   "bugs": {
     "url": "https://github.com/ListenBrainzBot/listenbrainz-api/issues"
   }
