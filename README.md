@@ -9,10 +9,18 @@ other runtimes with `fetch`. Includes a rate-limited MusicBrainz client.
 npm install listenbrainz-api
 ```
 
-The GitHub release workflow also publishes a scoped copy to GitHub Packages as
-`@listenbrainzbot/listenbrainz-api`; the npmjs.org package keeps its existing
-unscoped name. To install the GitHub Packages copy, configure the registry and
-authenticate with a GitHub personal access token (classic) with `read:packages`:
+The GitHub Actions workflow validates pushes and pull requests. It publishes a
+scoped copy to GitHub Packages as `@listenbrainzbot/listenbrainz-api` when a
+GitHub Release is published; the npmjs.org package keeps its existing unscoped
+name. Publish a GitHub Release whose tag matches the package version (for
+example, `v0.3.0`), or run the workflow manually from that tag:
+
+```sh
+gh workflow run publish-github-package.yml --repo ListenBrainzBot/listenbrainz-api --ref v0.3.0
+```
+
+To install the GitHub Packages copy, configure the registry and authenticate
+with a GitHub personal access token (classic) with `read:packages`:
 
 ```sh
 npm login --scope=@listenbrainzbot --auth-type=legacy --registry=https://npm.pkg.github.com
